@@ -15,6 +15,7 @@ Note: If you have modified the code, please use the following the command to reb
 
 # Going Further Questions
 1. There are 18 published Event Types. How would you manage them? What would you do if GitHub added more Event Types?
+
 A: It will not be an issue in this case. My program will be still able to determine the correct Event Types as long as users input the same format as Github described it as I specified in the help section of this command. However, it would be better if we could use another api or fetch the list of published events to display the pubslished events. We could also write a validator to lower case users' input and strip all spaces and compare it with the pubslished events.
 
 2. What factors impact performance? What would you do to improve them?
