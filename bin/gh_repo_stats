@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'gh_repo_stats'
+
+options = {}
+required_options = [:after_time, :before_time, :event_type, :count].sort
+
+option_parser = OptionParser.new do |opts|
+  executable_name = File.basename($PROGRAM_NAME)
+  opts.banner = "Usage: #{executable_name} [--after DATETIME] [--before DATETIME] [--event EVENT_NAME] [-n COUNT]"
+
+  opts.on('-a after_time', '--after after_time', 'Specify the lower bound of the time range in ISO 8601 format') do |after_time|
+    options[:after_time] = DateTime.parse(after_time)
+  end
+
+  opts.on('-b before_time', '--before before_time', 'Specify the upper bound of the time range in ISO 8601 format') do |before_time|
+    options[:before_time] = DateTime.parse(before_time)
+  end
+
+  opts.on('-e event_type', '--event event_type', 'Specify the event name (Case sensitive).') do |event_type|
+    options[:event_type] = event_type
+  end
+
+  opts.on('-c count', '--count count', 'Specify the number of repos') do |count|
+    options[:count] = count.to_i
+  end
+end
+
+begin
+  option_parser.parse!
+  rescue OptionParser::InvalidOption => error
+  puts "gh_repo_stats doesn't recognize that #{ error }"
+  exit
+  rescue OptionParser::AmbiguousOption => error
+  puts "That's an #{ error}"
+  exit
+end
+
+if options.keys.sort != required_options
+  puts "Error: you must specify all required arguments"
+  puts option_parser.help
+else
+  gh_repo_stats = GithubArchiveStats.new(options[:after_time],
+                                         options[:before_time],
+                                         options[:event_type],
+                                         options[:count])
+  gh_repo_stats.parse_events
+  gh_repo_stats.print_events
+end
