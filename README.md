@@ -8,10 +8,12 @@ gh_repo_stats [--after DATETIME] [--before DATETIME] [--event EVENT_NAME] [-n CO
 
 # Install this gem
 This gem has been complied for you already. Follow the below steps to install the gem
+
 1. ```$ cd path/to/gh_repo_stats```
 2. ```$ gem install gh_repo_stats-0.0.0.gem```
 3. ENJOY!
-Note: If you have modified the code, please use the following the command to rebuild the gem ```gem build gh_repo_stats.gemspec```
+
+    * Note: If you have modified the code, please use the following the command to rebuild the gem ```gem build gh_repo_stats.gemspec```
 
 # Going Further Questions
 1. There are 18 published Event Types. How would you manage them? What would you do if GitHub added more Event Types?
